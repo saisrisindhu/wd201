@@ -1,56 +1,51 @@
-const http = require("http");
-const fs = require("fs");
-const minimist = require("minimist");
-const args = minimist(process.argv.slice(2));
+const http = require('http');
+const fs = require('fs');
+const args = require('minimist')(process.argv.slice(2));
 
-let homeContent = "";
-let projectContent = "";
-let registrationContent = "";
+let homePage;
+let projectPage;
+let registrationPage;
+let registrationScript;
 
-// Read home.html
-fs.readFile("home.html", (err, home) => {
-    if (err) {
-        throw err;
-    }
-    homeContent = home;
-});
+fs.readFile("home.html", (err, data) => {
+    if (err) throw err;
+    homePage = data.toString();
+})
 
-// Read project.html
-fs.readFile("project.html", (err, project) => {
-    if (err) {
-        throw err;
-    }
-    projectContent = project;
-});
+fs.readFile("project.html", (err, data) => {
+    if (err) throw err;
+    projectPage = data.toString();
+})
 
-// Read registration.html
-fs.readFile("registration.html", (err, registration) => {
-    if (err) {
-        throw err;
-    }
-    registrationContent = registration;
-});
+fs.readFile("registration.html", (err, data) => {
+    if (err) throw err;
+    registrationPage = data.toString();
+})
 
-const server = http.createServer((request, response) => {
+fs.readFile("script.js", (err, data) => {
+    if (err) throw err;
+    registrationScript = data.toString();
+})
+
+http.createServer((request, response) => {
     let url = request.url;
-    response.writeHeader(200, { "Content-Type": "text/html" });
-
+    response.writeHead(200, { 'Content-Type': 'text/html' });
     switch (url) {
         case "/project":
-            response.write(projectContent);
+            response.write(projectPage);
             response.end();
             break;
         case "/registration":
-            response.write(registrationContent);
+            response.write(registrationPage);
+            response.end();
+            break;
+        case "/script.js":
+            response.write(registrationScript);
             response.end();
             break;
         default:
-            response.write(homeContent);
+            response.write(homePage);
             response.end();
             break;
     }
-});
-
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+}).listen(args.port);

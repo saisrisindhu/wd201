@@ -1,96 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration Form</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      form {
-        max-width: 400px;
-        margin: 0 auto;
-      }
-      label {
-        display: block;
-        margin-bottom: 8px;
-      }
-      input,
-      select {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 15px;
-        box-sizing: border-box;
-      }
-      button {
-        background-color: #4caf50;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-      #confirmationContainer {
-        display: none;
-        margin-top: 20px;
-        padding: 15px;
-        background-color: #dff0d8;
-        border: 1px solid #3c763d;
-        color: #3c763d;
-      }
-    </style>
-  </head>
-  <body>
-    <form id="registrationForm">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required />
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form </title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required />
+<body>
+  <div class="box">
+    <form class="form" id="form">
+      <h2 align="center">Registration Form</h2>
 
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob" required />
-
-      <label>
-        <input type="checkbox" id="terms" name="terms" required />
-        I accept the terms and conditions
-      </label>
-
-      <button type="submit">Submit</button>
+      <table class="tableForm" cellspacing="25px">
+        <tr>
+          <td><label for="name">Name :</label></td>
+          <td>
+            <input class="input" type="text" name="name" id="name" placeholder="Full Name" required />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="email">E-mail :</label></td>
+          <td>
+            <input class="input" type="email" name="email" id="email" placeholder="Email" required />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="name">Password :</label></td>
+          <td>
+            <input class="input" type="password" name="password" id="password" placeholder="Password" required />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="dob">Date Of Birth :</label></td>
+          <td>
+            <input style="width: 220px" class="input" type="date" name="dob" id="dob" required />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="checkbox" name="agree" id="agree" />
+            <label for="checkbox">Accespt Terms & Conditions</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn" type="submit">Submit</button>
+          </td>
+        </tr>
+      </table>
     </form>
+  </div>
 
-    <div id="confirmationContainer">
-      <!-- This container will show a confirmation message -->
-    </div>
+  <div class="entry">
+    <h2 class="subHead">Entries</h2>
+    <div id="tableDiv"></div>
+  </div>
+</body>
 
-    <script>
-      function submitForm() {
-        const formData = {
-          name: document.getElementById("name").value,
-          email: document.getElementById("email").value,
-          password: document.getElementById("password").value,
-          dob: document.getElementById("dob").value,
-          terms: document.getElementById("terms").checked,
-        };
-
-        // Display a confirmation message
-        const confirmationContainer = document.getElementById(
-          "confirmationContainer"
-        );
-        confirmationContainer.innerHTML = `<p>Registration successful! Thank you, ${formData.name}!</p>`;
-        confirmationContainer.style.display = "block";
-
-        // You can perform additional actions here, such as sending data to a server
-        // For demonstration purposes, we're just logging the form data to the console
-        console.log("Form Data:", formData);
-      }
-    </script>
-  </body>
 </html>
