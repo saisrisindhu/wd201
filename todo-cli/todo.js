@@ -8,7 +8,7 @@ const todoList = () => {
       if (index >= 0 && index < all.length) {
           all[index].completed = true;
       } else {
-          throw new Error('Invalid index');
+          throw new Error('Index Invalid');
       }
   };
 
@@ -53,13 +53,10 @@ const todoList = () => {
       });
       let g = "";
       for (let i = 0; i < dsl.length; i++) {
-          // eslint-disable-next-line no-undef
           obj = dsl[i];
           if (i === 0) {
-              // eslint-disable-next-line no-undef
               g = g + obj;
           } else {
-              // eslint-disable-next-line no-undef
               g = g + "\n" + obj;
           }
       }
