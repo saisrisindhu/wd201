@@ -1,77 +1,68 @@
-/* eslint-disable no-undef */
 const todoList = () => {
-  const all = [];
-  const add = (todoItem) => {
-      all.push(todoItem);
-  };
-  const markAsComplete = (index) => {
-      if (index >= 0 && index < all.length) {
-          all[index].completed = true;
-      } else {
-          throw new Error('Index Invalid');
-      }
-  };
-
-  const overdue = () => {
-      return all.filter(
-          (item) => item.dueDate < new Date().toLocaleDateString("en-CA")
-      );
-  };
-
-  const dueToday = () => {
-      return all.filter(
-          (item) => item.dueDate === new Date().toLocaleDateString("en-CA")
-      );
-  };
-
-  const dueLater = () => {
-      return all.filter(
-          (item) => item.dueDate > new Date().toLocaleDateString("en-CA")
-      );
-  };
-
-  const toDisplayableList = (list) => {
-      const dsl = [];
-      list.forEach((element) => {
-          if (element.dueDate === today) {
-              if (element.completed === true) {
-                  const a = "[x] " + element.title;
-                  dsl.push(a);
-              } else {
-                  const a = "[ ] " + element.title;
-                  dsl.push(a);
-              }
-          } else {
-              if (element.completed === true) {
-                  const a = "[x] " + element.title + " " + element.dueDate;
-                  dsl.push(a);
-              } else {
-                  const a = "[ ] " + element.title + " " + element.dueDate;
-                  dsl.push(a);
-              }
-          }
+    all = []
+    const dateToday = new Date();
+    const formattedDate = (d) => d.toISOString().split('T')[0];
+    const today = formattedDate(dateToday);
+    const yesterday = formattedDate(new Date(dateToday.setDate(dateToday.getDate() - 1)));
+    const tomorrow = formattedDate(new Date(dateToday.setDate(dateToday.getDate() + 1)));
+    
+    const add = (todoItem) => {
+      all.push(todoItem)
+    }
+    
+    const markAsComplete = (index) => {
+      all[index].completed = true
+    }
+  
+    const overdue = () => {
+        overduelist=[]
+        for (let i = 0; i < all.length; i++) {
+            if (all[i].dueDate< today && !all[i].completed){
+                overduelist.push(all[i])
+            }
+        }
+        return overduelist
+    }
+  
+    const dueToday = () => {
+        dueTodaylist=[]
+        for (let i = 0; i < all.length; i++) {
+            if (all[i].dueDate=== today){
+                dueTodaylist.push(all[i])
+            }
+        }
+        return dueTodaylist
+    }
+  
+    const dueLater = () => {
+        dueLaterlist=[]
+        for (let i = 0; i < all.length; i++) {
+            if (all[i].dueDate> today && !all[i].completed){
+                dueLaterlist.push(all[i])
+            }
+        }
+        return dueLaterlist
+    }
+  
+    const toDisplayableList = (list) => {
+      let dl=[];
+      list.forEach(item =>{
+        const s=item.completed? "[x]":"[ ]";
+        const t=item.title;
+        const due=item.dueDate===today?"":`${item.dueDate}`;
+        dl.push(`${s} ${t} ${due}`);
       });
-      let g = "";
-      for (let i = 0; i < dsl.length; i++) {
-          obj = dsl[i];
-          if (i === 0) {
-              g = g + obj;
-          } else {
-              g = g + "\n" + obj;
-          }
-      }
-      return g;
-  };
-
-  return {
+      return dl.join("\n");
+    }
+  
+    return {
       all,
       add,
       markAsComplete,
       overdue,
       dueToday,
       dueLater,
-      toDisplayableList,
+      toDisplayableList
+    };
   };
-};
-
-module.exports = todoList;
+  module.exports = todoList;
